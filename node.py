@@ -1,7 +1,7 @@
 # NODE #
 # $ERVER$Y$TEM #
 
-import tpls_server
+from lib import tpls_server
 import os
 from lib import ipfs
 import time
@@ -62,8 +62,8 @@ class NodeServer:
             os.system("start ipfs daemon --debug")
         else:
             os.system("start ipfs daemon")
-        #time.sleep(3)
-        #ipfs.Ipfs_API()
+        time.sleep(3)
+        ipfs.Ipfs_API()
 
     def __client_interface(self):
         # cli or menu based backend interface
