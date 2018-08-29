@@ -51,9 +51,9 @@ class tpls_server:
         self.client_hash = self._decode(self.incoming_client_hash)
         self.logger.debug(self.client_hash)
         print(self.client_hash)
-        return self.client_hash
+        return self._client_hash_analyzer(self.client_hash)
 
-    def _client_hash_analyzer(self):
+    def _client_hash_analyzer(self, chash):
         for i in range(0, len(self.__trusted_hashes)) or self.chash == self.__trusted_hashes[i]:
             if self.chash != self.__trusted_hashes[i]:
                 return False
