@@ -7,6 +7,10 @@ from lib import ipfs
 import time
 import ipfsapi
 
+_b_http = False
+_b_ipfs = False
+_b_cli = True
+_b_tpls = False
 
 ###### 0_NODE_SERVER ######
 class NodeServer:
@@ -81,6 +85,19 @@ class NodeServer:
         else:
             return 0
 
-###################
+
+#########_NODE_##########
+
 node = NodeServer()
-node._ipfs_node()
+def __b00l_launch():
+    if _b_cli:
+        node._client_interface()
+    elif _b_http:
+        node._http_server()
+    elif _b_ipfs:
+        node._ipfs_node()
+    elif _b_tpls:
+        node._tpls_server(0)
+
+def bl():
+    __b00l_launch()
