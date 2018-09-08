@@ -1,3 +1,5 @@
+# NODE # 
+# $ERVER$Y$TEM # 
 
 
 class tpls_server:
@@ -56,11 +58,13 @@ class tpls_server:
     def _client_hash_analyzer(self, chash):
         for i in range(0, len(self.__trusted_hashes)) or self.chash == self.__trusted_hashes[i]:
             if self.chash != self.__trusted_hashes[i]:
-                return False
+                return "fail"
             elif self.chash == self.__trusted_hashes[i]:
-                print('cha true')
-                return True
+                # self.__client_hash_pass = 1397             
+                # return self.__client_hash_pass
+                return "pass"
             else:
+                self.logger.debug("self._client_hash_analyze()")
                 return False
 
 
