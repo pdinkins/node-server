@@ -37,5 +37,8 @@ class FileObject:
 class Write2file:
     def __init__(self, filenameobject, data2write):
         with open(filenameobject, 'w') as fille:
-            fille.write(data2write[0])
-
+            if type(data2write) == list:
+                for i in range(0, len(data2write)):
+                    fille.writelines(data2write[i])
+            else:
+                fille.writelines(data2write)

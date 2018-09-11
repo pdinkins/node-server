@@ -7,10 +7,15 @@ from lib import ipfs
 import time
 import ipfsapi
 
-_b_http = False
-_b_ipfs = False
+# local bool variable to control what the node server launches on start up
+_b_http = True
+_b_ipfs = True
 _b_cli = True
-_b_tpls = False
+_b_tpls = True
+
+# node networking variables
+__node_ip = '192.168.1.7'
+__node_port = 1423
 
 ###### 0_NODE_SERVER ######
 class NodeServer:
@@ -50,11 +55,12 @@ class NodeServer:
         self._ipfs_node = self.__ipfs_node
         self._client_interface = self.__client_interface
         self._tpls_server = self.__tpls_server
+        self._cli_dir = self.__client_interface_dir
 
     def __http_server(self):
         # host files bound to tcp port
         #_0_sxc
-        os.system("start py -m http.server --bind 192.168.1.2")
+        os.system("start py -m http.server --bind 192.168.1.7")
 
 
     def __ipfs_node(self):
@@ -73,7 +79,7 @@ class NodeServer:
         # cli or menu based backend interface
         #
         self.__ipfs_client = ipfsapi.client.Client()
-        return self.__ipfs_client.bitswap_stat()
+        return self.__ipfs_client
    
     def __tpls_server(self, _type):
         # transport layer security server
@@ -84,18 +90,22 @@ class NodeServer:
                 tpls_server.start_handshake()
         else:
             return 0
+    
+    def __client_interface_dir(self):
+        return dir(self._client_interface())
 
 
 #########_NODE_##########
 
 node = NodeServer()
+
 def __b00l_launch():
-    if _b_cli:
+    if _b_ipfs:
+        node._ipfs_node()
+    elif _b_cli:
         node._client_interface()
     elif _b_http:
         node._http_server()
-    elif _b_ipfs:
-        node._ipfs_node()
     elif _b_tpls:
         node._tpls_server(0)
 

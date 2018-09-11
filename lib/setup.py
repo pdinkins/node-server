@@ -3,16 +3,21 @@
 # SETUP
 #
 # sniffs current build and generates current config file
+# configures and installs ipfs dynamically 
 #
 # import setup
 # 
 # user = setup.UserBuild()
 '''
+
+# python module imports
 import hashlib
-from _log import log
-from ip import Location
-from writer import FileObject, Write2file
-from ntwrk import pyscanner3
+
+# local lib imports
+from lib._log import log
+from lib.ip import Location
+from lib.writer import FileObject, Write2file
+from lib.ntwrk import pyscanner3
 
 class UserBuild:
     '''
