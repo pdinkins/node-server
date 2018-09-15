@@ -1,21 +1,30 @@
 # NODE #
 # $ERVER$Y$TEM #
 
+# -------- IMPORTS --------- # 
+# Local imports
 from lib import tpls_server
-import os
 from lib import ipfs
+
+# python builtin imports
+import os
 import time
+
+# third party package imports
 import ipfsapi
+# -------------------------- # 
+
+
 
 # local bool variable to control what the node server launches on start up
-_b_http = True
-_b_ipfs = True
-_b_cli = True
+_b_http = False
+_b_ipfs = False
+_b_cli = False
 _b_tpls = True
 
 # node networking variables
-__node_ip = '192.168.1.7'
-__node_port = 1423
+_0_node_ip = "192.168.1.7"
+_0_node_port = 1423
 
 ###### 0_NODE_SERVER ######
 class NodeServer:
@@ -46,7 +55,7 @@ class NodeServer:
             -write
 
         -tpls_server
-            -config security settings
+            -network communications
 
     """
 
@@ -82,16 +91,30 @@ class NodeServer:
         return self.__ipfs_client
    
     def __tpls_server(self, _type):
-        # transport layer security server
+        # spawn different kinds of tpls instances 
+        
+        # functional transport layer security server
+        # begin one time functional tpls instance
         if _type == 0:
-            tpls_server.start_handshake()
+            return tpls_server.start_handshake()
+        
+        # begin an infinite loop of functional tpls instances
         elif _type == 1:
             while True:
-                tpls_server.start_handshake()
+                tpls_server.start_handshake() 
+        
+
+        # tpls class instance
+        elif _type == 2:
+            # OOP implementation of the TPLS Server
+            tpls_server.TPLS_Server(_0_node_ip, _0_node_port)
+        
         else:
             return 0
     
+
     def __client_interface_dir(self):
+        # list of 
         return dir(self._client_interface())
 
 
@@ -102,12 +125,16 @@ node = NodeServer()
 def __b00l_launch():
     if _b_ipfs:
         node._ipfs_node()
-    elif _b_cli:
+    
+    if _b_cli:
         node._client_interface()
-    elif _b_http:
+    
+    if _b_http:
         node._http_server()
-    elif _b_tpls:
+    
+    if _b_tpls:
         node._tpls_server(0)
 
-def bl():
-    __b00l_launch()
+# launch the 
+# __b00l_launch()
+

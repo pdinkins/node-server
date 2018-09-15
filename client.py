@@ -17,13 +17,15 @@ from lib import menu
 from lib import ipfs
 from lib import tpls_server
 from lib import setup
+from lib.ntwrk import pyscanner3 as ps3
 from node import NodeServer
 
+import datetime
 from time import sleep
 import os
 
 
-__login = False
+__login = True
 __run = True
 __title_stat = [0]
 
@@ -36,7 +38,6 @@ class Admin:
 
 class DateTime():
     def dt(self):
-        import datetime
         return datetime.datetime.now()
 
 #define the class instances
@@ -186,6 +187,9 @@ def __ipfs_write():
     ipfs.IPFS_add_file('cfg.txt')
     input('>')
 
+def __pyscanner3():
+    return ps3.main()
+
 
 # Main menu dictionary
 mm = {
@@ -197,8 +201,8 @@ mm = {
 
 networking_menu_dict = {
     'functional tpls_server': __tpls_server,
-    'write to ipfs': __ipfs_write
-
+    'write to ipfs': __ipfs_write,
+    'scan LAN': __pyscanner3
 }
 
 #==============================================================================================#

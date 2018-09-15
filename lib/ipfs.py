@@ -1,3 +1,5 @@
+# NODE # 
+# $ERVER$Y$TEM # 
 '''
 # IPFS
 # interact with the ipfs network 
@@ -6,9 +8,9 @@
 # an ipfs node. 
  
 '''
-
+# --------- IMPORTS -------- #
 import ipfsapi
-import requests
+import requests 
 
 
 class Ipfs_API:

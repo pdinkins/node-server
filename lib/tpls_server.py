@@ -2,7 +2,7 @@
 # $ERVER$Y$TEM # 
 
 
-class tpls_server:
+class TPLS_Server:
     '''
     This class will create a socket server with the handshake 
     interface from the tpls_server module. This class replaces the 
@@ -20,8 +20,10 @@ class tpls_server:
         self._port = port
         self._socket_tup = (self._ip, self._port)
         self.__trusted_hashes = ['tpls']
-        self.chash = self.open_socket()
+        self.open_socket()
+        
 
+    # Restful functions #
     def _decode(self, arg):
         self.logger.debug('_decode')
         return arg.decode('utf-8')
@@ -34,18 +36,21 @@ class tpls_server:
         self.logger.debug('_check_size')
         return self.sys.getsizeof(bytes_object)
 
+
+    # Active Functions #
     def open_socket(self):
         self.logger.debug('open_socket')
         self._socket = self.soc.socket(self.soc.AF_INET, self.soc.SOCK_STREAM)
         self._socket.setsockopt(self.soc.SOL_SOCKET, self.soc.SO_REUSEADDR, 1)
         self._socket.bind(self._socket_tup)
+        # print(self._socket_tup)
         self.logger.debug('open_socket._socket.bind')
         self._socket.listen(10)
         self.conn , self.addr = self._socket.accept()
-        self.__ip , self.__port = str(self.addr[0]), str(self.addr[1])
-        self.logger.debug('IP: ' + str(self.__ip) + ' PORT: ' + str(self.__port))
-        return self.Thread(target=self.client_thread, args=(self.conn, self.__ip, self.__port)).start()
-        
+        self._ip_ , self._port_ = str(self.addr[0]), str(self.addr[1])
+        self.logger.debug('IP: ' + str(self._ip_) + ' PORT: ' + str(self._port_))
+        self.Thread(target=self.client_thread, args=(self.conn, self._ip_, self._port_)).start()
+    
     def client_thread(self, conn, ip, port, MAX_BUFFER_SIZE = 4096):
         self.logger.debug('client_thread')
         self.incoming_client_hash = self.conn.recv(MAX_BUFFER_SIZE)
@@ -53,13 +58,13 @@ class tpls_server:
         self.client_hash = self._decode(self.incoming_client_hash)
         self.logger.debug(self.client_hash)
         print(self.client_hash)
-        return self._client_hash_analyzer(self.client_hash)
+        self._client_hash_analyzer(self.client_hash)
 
     def _client_hash_analyzer(self, chash):
-        for i in range(0, len(self.__trusted_hashes)) or self.chash == self.__trusted_hashes[i]:
-            if self.chash != self.__trusted_hashes[i]:
+        for i in range(0, len(self.__trusted_hashes)) or chash == self.__trusted_hashes[i]:
+            if chash != self.__trusted_hashes[i]:
                 return "fail"
-            elif self.chash == self.__trusted_hashes[i]:
+            elif chash == self.__trusted_hashes[i]:
                 # self.__client_hash_pass = 1397             
                 # return self.__client_hash_pass
                 return "pass"
@@ -94,7 +99,7 @@ logging.basicConfig(level=logging.DEBUG,
                     )
 
 
-local_ip = "192.168.1.2"
+local_ip = "192.168.1.7"
 n_port = 1423
 tw = ['tpls']
 trusted_wallet_hash = tw
