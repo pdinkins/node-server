@@ -133,7 +133,7 @@ def __b00l_launch():
         node._http_server()
     
     if _b_tpls:
-        node._tpls_server(0)
+        node._tpls_server(2)
 
 # launch the 
 # __b00l_launch()

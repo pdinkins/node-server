@@ -21,6 +21,7 @@ from lib.ntwrk import pyscanner3 as ps3
 from node import NodeServer
 
 import datetime
+import platform
 from time import sleep
 import os
 
@@ -73,27 +74,26 @@ def help_menu():
     input('> ')
 
 #==============================================================================================#
+def title_bar():
+    print("=" * 80)
+
 def title():
-    # running titlebar
-    print('=' * 80)
+    title_bar()
     print('__ORION_NET__\t\t\t\t\t', dt1.dt())
-    #print('=' * 80)
     
-    # subtitle
     if __title_stat[0] == 0:
         print('\n\t\t__LOGIN')
-        print('=' * 80)
+        title_bar()
     
     elif __title_stat[0] == 1:
         print('\n\t\t__LOGIN_FAILED__')
-        print('=' * 80)
+        title_bar()
     
     elif __title_stat[0] == 2:
         print('\n\t\t__NODE_ADMIN__')
-        print('=' * 80)
+        title_bar()
 
 def clear():
-    import platform
     ops = platform.system()
     if ops == 'Darwin':
         os.system('clear')
@@ -105,7 +105,76 @@ def refresh_screen():
     title()
 
 
+
 #==============================================================================================#
+def rfsm():
+    path = input('path>')
+    p = rfs(path)
+    print(p)
+
+def rfs(pathname):
+    index = 0
+    tsizevar = 0
+    print('\n\nINDEX\t\tSIZE\t\tDIRECTORY')
+    title_bar()
+    for root, dirs, files in os.walk(pathname):
+        for file in files:
+            try:
+                try:
+                    pathname = os.path.join(root, file)
+                    size = os.path.getsize(pathname)
+                    tsizevar += size
+                    print(index, '\t\t', size, '\t\t', pathname)
+                    index += 1
+                except PermissionError:
+                    print('Permission Error')
+            except (FileNotFoundError, OSError):
+                print('file not found error')
+
+    returndata = {'indexed files': index,'totalsize': tsizevar}
+    print(returndata)
+    input('>')
+    return returndata
+
+
+#===============================EXTERIOR FUNCTION CALLS===================================# 
+def __setup():
+    ub = setup.UserBuild()
+    input('>>')
+
+def __tpls_server():
+    __node = NodeServer()
+    ing = input(">>")
+
+def __ntwrk_menu():
+    menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
+
+def __ipfs_write():
+    ipfs.IPFS_add_file('cfg.txt')
+    input('>')
+
+def __pyscanner3():
+    return ps3.main()
+#==============================================================================================#
+
+# Main menu dictionary
+mm = {
+    'Directory Info': rfsm,
+    'Setup': __setup,
+    'Networking Menu': __ntwrk_menu
+}
+
+networking_menu_dict = {
+    'functional tpls_server': __tpls_server,
+    'write to ipfs': __ipfs_write,
+    'scan LAN': __pyscanner3
+}
+
+#==============================================================================================#
+
+__menu = menu.newMenu(mm, "main menu")
+
+
 ####### LOGIN SEQUENCE #######
 
 if __login == False:
@@ -134,76 +203,6 @@ while __login:
             refresh_screen()
             break
 #==============================================================================================#
-
-
-#==============================================================================================#
-def rfsm():
-    path = input('path>')
-    p = rfs(path)
-    print(p)
-
-def rfs(pathname):
-    
-    index = 0
-    tsizevar = 0
-    print('\n\nINDEX\t\tSIZE\t\tDIRECTORY')
-    print('=' * 80)
-    for root, dirs, files in os.walk(pathname):
-        for file in files:
-            try:
-                try:
-                    pathname = os.path.join(root, file)
-                    size = os.path.getsize(pathname)
-                    tsizevar += size
-                    print(index, '\t\t', size, '\t\t', pathname)
-                    index += 1
-                except PermissionError:
-                    print('perm error')
-
-            except (FileNotFoundError, OSError):
-                print('file not found error')
-
-    returndata = {'indexed files': index,'totalsize': tsizevar}
-    print(returndata)
-    input('>')
-    return returndata
-
-def rootfile_list_2():
-    p = rfs('.')
-    print(p)
-
-def __setup():
-    ub = setup.UserBuild()
-    input('>>')
-
-def __tpls_server():
-    __node = NodeServer()
-    ing = input(">>")
-
-def __ntwrk_menu():
-    menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
-
-def __ipfs_write():
-    ipfs.IPFS_add_file('cfg.txt')
-    input('>')
-
-def __pyscanner3():
-    return ps3.main()
-
-
-# Main menu dictionary
-mm = {
-    'current directory info': rootfile_list_2,
-    'custom directory info': rfsm,
-    'setup': __setup,
-    'networking menu': __ntwrk_menu
-}
-
-networking_menu_dict = {
-    'functional tpls_server': __tpls_server,
-    'write to ipfs': __ipfs_write,
-    'scan LAN': __pyscanner3
-}
 
 #==============================================================================================#
 ######## APP INTERFACE ########
