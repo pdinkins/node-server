@@ -26,7 +26,7 @@ from time import sleep
 import os
 
 
-__login = True
+__login = False
 __run = True
 __title_stat = [0]
 
@@ -43,7 +43,6 @@ class DateTime():
 
 #define the class instances
 admin1 = Admin('admin', 'password')
-# hint: this line 
 dt1 = DateTime()
 
 
@@ -78,20 +77,25 @@ def title_bar():
     print("=" * 80)
 
 def title():
+    ts = ''
     title_bar()
-    print('__ORION_NET__\t\t\t\t\t', dt1.dt())
-    
+    print('__ORION_NET_____\t\t\t\t', dt1.dt())
     if __title_stat[0] == 0:
-        print('\n\t\t__LOGIN')
+        print('\t\t|__LOGIN')
         title_bar()
     
     elif __title_stat[0] == 1:
-        print('\n\t\t__LOGIN_FAILED__')
+        print('\t\t|__LOGIN_FAILED__')
         title_bar()
     
     elif __title_stat[0] == 2:
-        print('\n\t\t__NODE_ADMIN__')
+        print('\t\t|__NODE_ADMIN__')
         title_bar()
+    
+    
+    
+    
+    
 
 def clear():
     ops = platform.system()
@@ -143,8 +147,15 @@ def __setup():
     input('>>')
 
 def __tpls_server():
-    __node = NodeServer()
-    ing = input(">>")
+    try:
+        print('[0] single instance of tpls')
+        print('[1] infinite loop of tpls')
+        print('[2] oop instance of tpls')
+        _id = int(input("tpls type = "))
+        NodeServer()._tpls_server(_id)
+    except ValueError:
+        print("bruh thats not an option")
+        input('>')
 
 def __ntwrk_menu():
     menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
@@ -172,60 +183,61 @@ networking_menu_dict = {
 
 #==============================================================================================#
 
-__menu = menu.newMenu(mm, "main menu")
+#__menu = menu.newMenu(mm, "main menu")
 
 
-####### LOGIN SEQUENCE #######
-
-if __login == False:
-    __title_stat.clear()
-    __title_stat.append(2)
-
-while __login:
-    #title()
-    usn = input('username: ')
-    if usn != admin1.username:
+if __name__ == "__main__":
+    ####### LOGIN SEQUENCE #######
+    if __login == False:
         __title_stat.clear()
-        __title_stat.append(1)
-        refresh_screen()
-                
-    elif usn == admin1.username:
-        __title_stat.clear()
-        __title_stat.append(0)
-        refresh_screen()
-        pasw = input('password: ')
+        __title_stat.append(2)
 
-        if pasw == admin1.password:
+    while __login:
+        title()
+        usn = input('username: ')
+        if usn != admin1.username:
             __title_stat.clear()
-            __title_stat.append(2)
+            __title_stat.append(1)
             refresh_screen()
-            print('You are logging in as ', usn)
+                    
+        elif usn == admin1.username:
+            __title_stat.clear()
+            __title_stat.append(0)
             refresh_screen()
+            pasw = input('password: ')
+
+            if pasw == admin1.password:
+                __title_stat.clear()
+                __title_stat.append(2)
+                refresh_screen()
+                print('You are logging in as ', usn)
+                refresh_screen()
+                break
+    #==============================================================================================#
+
+    #==============================================================================================#
+    ######## APP INTERFACE ########
+    while __run:
+        refresh_screen()
+        command = input('>')
+        if command == '0':
+            refresh_screen()
+            print('LOGING OUT OF THE MATRIX')
+            clear()
             break
-#==============================================================================================#
+        
+        elif command == 'tpls':
+            __tpls_server()
+ 
+        elif command == "help":
+            refresh_screen()
+            help_menu()
 
-#==============================================================================================#
-######## APP INTERFACE ########
-while __run:
-    refresh_screen()
-    command = input('>')
-    if command == '0':
-        refresh_screen()
-        print('LOGING OUT OF THE MATRIX')
-        clear()
-        break
-    
-    elif command == "help":
-        refresh_screen()
-        help_menu()
+        elif command == '1':
+            refresh_screen()              
+            menu.initialize_menu(mm, 'PYTHOS MAIN MENU')
 
-    elif command == '1':
-        refresh_screen()              
-        menu.initialize_menu(mm, 'PYTHOS MAIN MENU')
-
-    elif command == '2':
-        refresh_screen()
-        __ntwrk_menu()
-    
-
-#==============================================================================================#
+        elif command == '2':
+            refresh_screen()
+            __ntwrk_menu()
+    #==============================================================================================#

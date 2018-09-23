@@ -19,7 +19,7 @@ import ipfsapi
 # local bool variable to control what the node server launches on start up
 _b_http = False
 _b_ipfs = False
-_b_cli = False
+_b_cli = True
 _b_tpls = True
 
 # node networking variables
@@ -119,22 +119,14 @@ class NodeServer:
 
 
 #########_NODE_##########
-
 node = NodeServer()
-
-def __b00l_launch():
+def main():
+    
     if _b_ipfs:
         node._ipfs_node()
-    
-    if _b_cli:
+    elif _b_cli:
+        node._cli_dir()
         node._client_interface()
-    
-    if _b_http:
-        node._http_server()
-    
-    if _b_tpls:
-        node._tpls_server(2)
 
-# launch the 
-# __b00l_launch()
-
+if __name__ == "__main__":
+    main()

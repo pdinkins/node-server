@@ -1,79 +1,6 @@
 # NODE # 
 # $ERVER$Y$TEM # 
 
-
-class TPLS_Server:
-    '''
-    This class will create a socket server with the handshake 
-    interface from the tpls_server module. This class replaces the 
-    functional implementation of the tpls server. 
-    
-    '''
-    import sys
-    import socket as soc
-    from threading import Thread
-
-    def __init__(self, ip, port):
-        self.logger = logging.getLogger('Tpls_Server')
-        self.logger.debug('__init__')
-        self._ip = ip
-        self._port = port
-        self._socket_tup = (self._ip, self._port)
-        self.__trusted_hashes = ['tpls']
-        self.open_socket()
-        
-
-    # Restful functions #
-    def _decode(self, arg):
-        self.logger.debug('_decode')
-        return arg.decode('utf-8')
-    
-    def _encode(self, arg):
-        self.logger.debug('_encode')
-        return arg.encode('utf-8')
-    
-    def _check_size(self, bytes_object, MAX_BUFFER_SIZE = 4096):
-        self.logger.debug('_check_size')
-        return self.sys.getsizeof(bytes_object)
-
-
-    # Active Functions #
-    def open_socket(self):
-        self.logger.debug('open_socket')
-        self._socket = self.soc.socket(self.soc.AF_INET, self.soc.SOCK_STREAM)
-        self._socket.setsockopt(self.soc.SOL_SOCKET, self.soc.SO_REUSEADDR, 1)
-        self._socket.bind(self._socket_tup)
-        # print(self._socket_tup)
-        self.logger.debug('open_socket._socket.bind')
-        self._socket.listen(10)
-        self.conn , self.addr = self._socket.accept()
-        self._ip_ , self._port_ = str(self.addr[0]), str(self.addr[1])
-        self.logger.debug('IP: ' + str(self._ip_) + ' PORT: ' + str(self._port_))
-        self.Thread(target=self.client_thread, args=(self.conn, self._ip_, self._port_)).start()
-    
-    def client_thread(self, conn, ip, port, MAX_BUFFER_SIZE = 4096):
-        self.logger.debug('client_thread')
-        self.incoming_client_hash = self.conn.recv(MAX_BUFFER_SIZE)
-        self.incoming_client_hash_size = self._check_size(self.incoming_client_hash)
-        self.client_hash = self._decode(self.incoming_client_hash)
-        self.logger.debug(self.client_hash)
-        print(self.client_hash)
-        self._client_hash_analyzer(self.client_hash)
-
-    def _client_hash_analyzer(self, chash):
-        for i in range(0, len(self.__trusted_hashes)) or chash == self.__trusted_hashes[i]:
-            if chash != self.__trusted_hashes[i]:
-                return "fail"
-            elif chash == self.__trusted_hashes[i]:
-                # self.__client_hash_pass = 1397             
-                # return self.__client_hash_pass
-                return "pass"
-            else:
-                self.logger.debug("self._client_hash_analyze()")
-                return False
-
-
-
 '''
 # tpls_server.py
 
@@ -84,19 +11,25 @@ this code works for the most part
 
 when i wrote this only God and I understood it. 
 now only God does
-
-
 '''
 import logging
 import datetime as dt
 import logging
 import sys
 import socketserver
+import socket
 import os
+import inspect
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(name)s: %(message)s',
                     )
+
+class config:
+    def __init__(self):
+        self.ip = '192.168.1.7'
+        self.port = 1423
+        self.tw = ['tpls']
 
 
 local_ip = "192.168.1.7"
@@ -143,7 +76,6 @@ def client_thread(conn, ip, port, MAX_BUFFER_SIZE = 4096):
     
     
     # MAX_BUFFER_SIZE is how big the message can be
-    import sys
     siz = sys.getsizeof(init_chash_b)
     if  siz >= MAX_BUFFER_SIZE:
         print("The length of input is probably too long: {}".format(siz))
@@ -192,9 +124,9 @@ def fid_analyze(fid):
     autolog(msg)
     if fid == '0':
         return 0
-    elif fid == '0_np':
+    elif fid == 'ipfs':
         autolog('0_NETWORK_PROTOCOL')
-        os.system('start ipfs daemon --debug')
+        os.system('start ipfs daemon')
     elif fid == '1':
         autolog('1_np')
     else:
@@ -205,7 +137,6 @@ def post_fid_anal():
 
 
 def start_handshake():
-    import socket
     soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # this is for easy starting/killing the app
     soc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -244,7 +175,6 @@ def start_handshake():
     
 
 def autolog(message):
-    import inspect, logging
     # Get the previous frame in the stack, otherwise it would
     # be this function!!!
     func = inspect.currentframe().f_back.f_code
@@ -255,4 +185,80 @@ def autolog(message):
         func.co_name,
         message
     ))
+
+
+
+
+
+class TPLS_Server:
+    '''
+    This class will create a socket server with the handshake 
+    interface from the tpls_server module. This class replaces the 
+    functional implementation of the tpls server. 
+    
+    '''
+    import sys
+    import socket as soc
+    from threading import Thread
+
+    def __init__(self, ip, port):
+        self.logger = logging.getLogger('Tpls_Server')
+        self.logger.debug('__init__')
+        self._ip = ip
+        self._port = port
+        self._socket_tup = (self._ip, self._port)
+        self.__trusted_hashes = ['tpls']
+        self.open_socket()
+        
+
+    # Restful functions #
+    def _decode(self, arg):
+        self.logger.debug('_decode')
+        return arg.decode('utf-8')
+    
+    def _encode(self, arg):
+        self.logger.debug('_encode')
+        return arg.encode('utf-8')
+    
+    def _check_size(self, bytes_object, MAX_BUFFER_SIZE = 4096):
+        self.logger.debug('_check_size')
+        return self.sys.getsizeof(bytes_object)
+
+
+    # Active Functions #
+    def open_socket(self):
+        self.logger.debug('open_socket')
+        self._socket = self.soc.socket(self.soc.AF_INET, self.soc.SOCK_STREAM)
+        self._socket.setsockopt(self.soc.SOL_SOCKET, self.soc.SO_REUSEADDR, 1)
+        self._socket.bind(self._socket_tup)
+        self.__ip_info = str('Node IP:PORT\t') + str(self._socket_tup)
+        self.logger.debug('open_socket._socket.bind')
+        self.logger.debug(self.__ip_info)
+        self._socket.listen(10)
+        self.conn , self.addr = self._socket.accept()
+        self._ip_ , self._port_ = str(self.addr[0]), str(self.addr[1])
+        self.logger.debug('IP: ' + str(self._ip_) + ' PORT: ' + str(self._port_))
+        self.Thread(target=self.client_thread, args=(self.conn, self._ip_, self._port_)).start()
+    
+    def client_thread(self, conn, ip, port, MAX_BUFFER_SIZE = 4096):
+        self.logger.debug('client_thread')
+        self.incoming_client_hash = self.conn.recv(MAX_BUFFER_SIZE)
+        self.incoming_client_hash_size = self._check_size(self.incoming_client_hash)
+        self.client_hash = self._decode(self.incoming_client_hash)
+        self.logger.debug(self.client_hash)
+        print(self.client_hash)
+        self._client_hash_analyzer(self.client_hash)
+
+    def _client_hash_analyzer(self, chash):
+        for i in range(0, len(self.__trusted_hashes)) or chash == self.__trusted_hashes[i]:
+            if chash != self.__trusted_hashes[i]:
+                return "fail"
+            elif chash == self.__trusted_hashes[i]:
+                # self.__client_hash_pass = 1397             
+                # return self.__client_hash_pass
+                return "pass"
+            else:
+                self.logger.debug("self._client_hash_analyze()")
+                return False
+
 
