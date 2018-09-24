@@ -184,31 +184,28 @@ networking_menu_dict = {
 #==============================================================================================#
 
 #__menu = menu.newMenu(mm, "main menu")
-
-
-if __name__ == "__main__":
-    ####### LOGIN SEQUENCE #######
+def ts_c_a(ts_id):
+    __title_stat.clear()
+    __title_stat.append(ts_id)
+    
+def _client():
     if __login == False:
-        __title_stat.clear()
-        __title_stat.append(2)
+        ts_c_a(2)
 
     while __login:
         title()
         usn = input('username: ')
         if usn != admin1.username:
-            __title_stat.clear()
-            __title_stat.append(1)
+            ts_c_a(1)
             refresh_screen()
                     
         elif usn == admin1.username:
-            __title_stat.clear()
-            __title_stat.append(0)
+            ts_c_a(0)
             refresh_screen()
             pasw = input('password: ')
 
             if pasw == admin1.password:
-                __title_stat.clear()
-                __title_stat.append(2)
+                ts_c_a(2)
                 refresh_screen()
                 print('You are logging in as ', usn)
                 refresh_screen()
@@ -241,3 +238,7 @@ if __name__ == "__main__":
             refresh_screen()
             __ntwrk_menu()
     #==============================================================================================#
+
+
+if __name__ == "__main__":
+    _client()
