@@ -16,10 +16,15 @@
 import hashlib
 
 # local lib imports
-from lib._log import log
-from lib.ip import Location
-from lib.writer import FileObject, Write2file
-from lib.ntwrk import pyscanner3
+try:
+    from lib._log import log
+    from lib.ip import Location
+    from lib.writer import FileObject, Write2file
+except ModuleNotFoundError:
+    from _log import log
+    from ip import Location
+    from writer import FileObject, Write2file
+
 
 class UserBuild:
     '''
@@ -35,8 +40,14 @@ class UserBuild:
         self.config_file = self._config_file()
 
     def __hash(self, val1, val2):
+        self._hv = str(val1) + str(val2)
+        log(type(self._hv))
+        log(self._hv)
+        self.__hv = hashlib.sha256(self._hv.encode('utf-8')).hexdigest()
+        log(type(self.__hv))
+        log(self.__hv)
         # reutrn hash value
-        return 0
+        return self.__hv
 
     def os_sys(self):
         import platform
@@ -48,7 +59,6 @@ class UserBuild:
         self.__0_node_ip = self.location.ip
         log(self.__0_node_ip)
         log('network host scan initiating')
-        #pyscanner3.scan_host_ip()
         return self.__0_node_ip
 
     def user_build(self):
@@ -92,8 +102,11 @@ class UserBuild:
             raise
     
     def _config_file(self):
-        self.__config_file = FileObject('cfg', 'txt')
+        self.__config_file = FileObject(self._hash_value, 'txt')
         Write2file(self.__config_file.file, self.build)
         return self.__config_file
         
+
+if __name__ == "__main__":
+    Node = UserBuild()
 

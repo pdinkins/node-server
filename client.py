@@ -29,32 +29,7 @@ import os
 __login = False
 __run = True
 __title_stat = [0]
-
-#==============================================================================================#
-#### Classes
-class Admin:
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-class DateTime():
-    def dt(self):
-        return datetime.datetime.now()
-
-#define the class instances
-admin1 = Admin('admin', 'password')
-dt1 = DateTime()
-
-
-
-#==============================================================================================#
-
-def help_menu():
-    '''
-    TODO: Add more sarcastic comments for laughs.
-    '''
-    print(
-        """
+__help =  """
         _______HELP_PAGE_______
         =======================
         
@@ -69,8 +44,21 @@ def help_menu():
         google it bro.
 
         """
-    )
-    input('> ')
+
+
+#==============================================================================================#
+#### Classes
+class Admin:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+class DateTime():
+    def dt(self):
+        return datetime.datetime.now()
+#==============================================================================================#
+
+
 
 #==============================================================================================#
 def title_bar():
@@ -91,11 +79,6 @@ def title():
     elif __title_stat[0] == 2:
         print('\t\t|__NODE_ADMIN__')
         title_bar()
-    
-    
-    
-    
-    
 
 def clear():
     ops = platform.system()
@@ -107,10 +90,10 @@ def clear():
 def refresh_screen():
     clear()
     title()
+#=========================================================================================#
 
 
-
-#==============================================================================================#
+#===============================EXTERIOR FUNCTION CALLS===================================#
 def rfsm():
     path = input('path>')
     p = rfs(path)
@@ -139,12 +122,17 @@ def rfs(pathname):
     print(returndata)
     input('>')
     return returndata
+ 
+def __setup_menu():
+    menu.initialize_menu(setup_md, "SETUP MAIN MENU")
 
-
-#===============================EXTERIOR FUNCTION CALLS===================================# 
-def __setup():
+def __user_build():
     ub = setup.UserBuild()
     input('>>')
+
+def __help_menu():
+    print(__help)
+    input('> ')
 
 def __tpls_server():
     try:
@@ -164,6 +152,10 @@ def __ipfs_write():
     ipfs.IPFS_add_file('cfg.txt')
     input('>')
 
+def __vim():
+    return "vim"
+
+
 def __pyscanner3():
     return ps3.main()
 #==============================================================================================#
@@ -171,7 +163,7 @@ def __pyscanner3():
 # Main menu dictionary
 mm = {
     'Directory Info': rfsm,
-    'Setup': __setup,
+    'Setup Menu': __setup_menu,
     'Networking Menu': __ntwrk_menu
 }
 
@@ -181,6 +173,11 @@ networking_menu_dict = {
     'scan LAN': __pyscanner3
 }
 
+setup_md = {
+    'User Build': __user_build,
+    'Help': __help_menu
+
+}
 #==============================================================================================#
 
 #__menu = menu.newMenu(mm, "main menu")
@@ -241,4 +238,7 @@ def _client():
 
 
 if __name__ == "__main__":
+    #define the class instances
+    admin1 = Admin('admin', 'password')
+    dt1 = DateTime()
     _client()
