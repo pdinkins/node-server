@@ -155,7 +155,6 @@ def __ipfs_write():
 def __vim():
     return "vim"
 
-
 def __pyscanner3():
     return ps3.main()
 #==============================================================================================#
@@ -225,7 +224,7 @@ def _client():
  
         elif command == "help":
             refresh_screen()
-            help_menu()
+            __help_menu()
 
         elif command == '1':
             refresh_screen()              
