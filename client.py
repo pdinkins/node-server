@@ -25,7 +25,7 @@ import platform
 from time import sleep
 import os
 
-
+# CLIENT VARIABLES 
 __login = False
 __run = True
 __title_stat = [0]
@@ -47,7 +47,6 @@ __help =  """
 
 
 #==============================================================================================#
-#### Classes
 class Admin:
     def __init__(self, username, password):
         self.username = username
@@ -153,7 +152,7 @@ def __ipfs_write():
     input('>')
 
 def __vim():
-    return "vim"
+    return os.system("vim")
 
 def __pyscanner3():
     return ps3.main()
