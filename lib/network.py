@@ -1,65 +1,59 @@
 # NODE # 
 # $ERVER$Y$TEM # 
+# NETWORK #
 
-# Network
-# contains network related functions
 
-import logging
+try:
+    from lib.ntwrk import pyscanner
+    from lib.ntwrk import pyscanner2
+    from lib.ntwrk import pyscanner3
+    from lib.ntwrk import reverseshell
+    from lib.ntwrk import slowloris
+    from lib.ntwrk import testclient
+    from lib.ntwrk import tpls_server
+except ModuleNotFoundError:
+    from ntwrk import pyscanner
+    from ntwrk import pyscanner2
+    from ntwrk import pyscanner3
+    from ntwrk import reverseshell
+    from ntwrk import slowloris
+    from ntwrk import testclient
+    from ntwrk import tpls_server    
 
-#==============================================================================================#
-class tpls_server:
+class NetworkClient:
     '''
-    This class will create a socket server with the handshake 
-    interface from the tpls_server module. This class replaces the 
-    functional implementation of the tpls server. 
-    
+    NetworkClient class requires the NodeBuild class containing import config data
     '''
-    import sys
-    import socket as soc
+    def __init__(self, NodeBuild):
+        self._nodebuild = NodeBuild
+        self.ip = self._nodebuild._ip
+        self.port = self._nodebuild._port
+        self._network_scan = self.__network_scan
+        self._pyscanner2 = self.__pyscanner2
+        self._pyscanner = self.__pyscanner
+        self._reverse_shell = self.__reverse_shell
+        self._slow_loris = self.__slow_loris
+        self._test_client = self.__test_client
+        self._tpls_server = self.__tpls_server
 
-    from threading import Thread
-
-    def __init__(self, ip, port):
-        self.logger = logging.getLogger('Tpls_Server')
-        self._ip = ip
-        self._port = port
-        self._socket_tup = (self._ip, self._port)
-        self.__trusted_hashes = ['tpls']
-        self.chash = self.open_socket()
-
-    def _decode(self, arg):
-        return arg.decode('utf-8')
+    def __network_scan(self):
+        return pyscanner3.main()
     
-    def _encode(self, arg):
-        return arg.encode('utf-8')
+    def __pyscanner2(self):
+        return pyscanner2.main()
+
+    def __pyscanner(self):
+        return pyscanner.main()
     
-    def _check_size(self, bytes_object, MAX_BUFFER_SIZE = 4096):
-        return self.sys.getsizeof(bytes_object)
+    def __reverse_shell(self):
+        return reverseshell
 
-    def open_socket(self):
-        self._socket = self.soc.socket(self.soc.AF_INET, self.soc.SOCK_STREAM)
-        self._socket.setsockopt(self.soc.SOL_SOCKET, self.soc.SO_REUSEADDR, 1)
-        self._socket.bind(self._socket_tup)
-        self._socket.listen(10)
-        self.conn , self.addr = self._socket.accept()
-        self.__ip , self.__port = str(self.addr[0]), str(self.addr[1])
-        return self.Thread(target=self.client_thread, args=(self.conn, self.__ip, self.__port)).start()
+    def __slow_loris(self):
+        return slowloris.main()
+    
+    def __test_client(self):
+        return testclient
+    
+    def __tpls_server(self):
+        return tpls_server.start_handshake()
         
-    def client_thread(self, conn, ip, port, MAX_BUFFER_SIZE = 4096):
-        self.incoming_client_hash = self.conn.recv(MAX_BUFFER_SIZE)
-        self.incoming_client_hash_size = self._check_size(self.incoming_client_hash)
-        self.client_hash = self._decode(self.incoming_client_hash)
-        print(self.client_hash)
-        return self.client_hash
-
-    def _client_hash_analyzer(self):
-        for i in range(0, len(self.__trusted_hashes)) or self.chash == self.__trusted_hashes[i]:
-            if self.chash != self.__trusted_hashes[i]:
-                return False
-            elif self.chash == self.__trusted_hashes[i]:
-                return True
-            else:
-                return False
-
-        
-

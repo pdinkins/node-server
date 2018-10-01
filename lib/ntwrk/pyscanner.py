@@ -29,25 +29,26 @@ except KeyboardInterrupt:
 	print('KeyboardInterrupt')
 	sys.exit(1)
 
-hostip = gethostbyname(host)
-print('\n[*] Host: %s IP: %s' % (host, hostip))
-print('[*] Scanning started at %s...\n' % (time.strftime('%H:%M:%S')))
-start_time = datetime.now()
+def main():
+	hostip = gethostbyname(host)
+	print('\n[*] Host: %s IP: %s' % (host, hostip))
+	print('[*] Scanning started at %s...\n' % (time.strftime('%H:%M:%S')))
+	start_time = datetime.now()
 
-for port in range(min_port, max_port):
-	try:
-		response = scan_host(hostip, port)
-		if response == 0:
-			print('[*] Port: %d: Open' % (port))
-	except Exception as e:
-		print(e)
-		pass
+	for port in range(min_port, max_port):
+		try:
+			response = scan_host(hostip, port)
+			if response == 0:
+				print('[*] Port: %d: Open' % (port))
+		except Exception as e:
+			print(e)
+			pass
 
-stop_time = datetime.now()
-total_time = stop_time - start_time
-print('\n[*] Scan finished at %s' % (time.strftime('%H:%M:%S')))
-print('[*] Scan duration: %s' % (total_time))
-print('[*] PyScanner')
+	stop_time = datetime.now()
+	total_time = stop_time - start_time
+	print('\n[*] Scan finished at %s' % (time.strftime('%H:%M:%S')))
+	print('[*] Scan duration: %s' % (total_time))
+	print('[*] PyScanner')
 
 
 

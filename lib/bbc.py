@@ -2,9 +2,15 @@
 # $ERVER$Y$TEM # 
 # BLOCKCHAIN #
 
-import datetime
-import hashlib as hasher
-
+try:
+    import datetime
+    import hashlib as hasher
+    from lib.bbc import writer
+except ModuleNotFoundError:
+    import datetime
+    import hashlib as hasher
+    from bbc import writer
+    
 #==============================================================================================#
 class Genesis_Block:
     '''
@@ -89,4 +95,45 @@ class Blockchain:
     def last_block(self):
         return True
         
+#==============================================================================================#
+# MAIN-LEDGER (genesis chain ledger)
+class PublicLedger:
+    '''
+    Genesis chain are created by initiating a PublicLedger.
+    This class adopts the FileObject class 
+    ''' 
+    def __init__(self):
+        self.ledgerfileobject = writer.FileObject('genesis', 'csv')
+    
+    # creates a ledger file
+    def __write_file(self):
+        self.ledgerfile = self.ledgerfileobject.file
 
+    # writes initial data to file
+    def main_ledger_construct(self):
+        pass
+
+    # read data from the ledger
+    def main_ledger_parse(self):
+        pass
+
+    def main_ledger_update(self):
+        pass
+
+#==============================================================================================#
+# SUB-LEDGER (branched chain ledger)
+class PrivateLedger:
+    '''
+    Branched chains are created by initiating a PrivateLedger
+    '''
+    def __init__(self):
+        pass
+
+    def sub_ledger_construct(self):
+        pass
+
+    def sub_ledger_parse(self):
+        pass
+
+    def sub_ledger_update(self):
+        pass

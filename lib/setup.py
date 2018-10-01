@@ -1,5 +1,6 @@
 # NODE # 
 # $ERVER$Y$TEM # 
+# SETUP #
 
 '''
 # SETUP
@@ -14,17 +15,16 @@
 
 # python module imports
 import hashlib
+from requests import get
+import platform
 
 # local lib imports
 try:
     from lib._log import log
-    from lib.ip import Location
     from lib.writer import FileObject, Write2file
 except ModuleNotFoundError:
     from _log import log
-    from ip import Location
     from writer import FileObject, Write2file
-
 
 class UserBuild:
     '''
@@ -50,7 +50,6 @@ class UserBuild:
         return self.__hv
 
     def os_sys(self):
-        import platform
         return platform.system()
     
     def get_ip(self):
@@ -105,7 +104,28 @@ class UserBuild:
         self.__config_file = FileObject(self._hash_value, 'txt')
         Write2file(self.__config_file.file, self.build)
         return self.__config_file
-        
+
+
+class Location:
+    """
+    virtual and physical location class
+    """
+    def __init__(self):
+        self.location = self.__location()
+        self.ip = self.__get_ip()
+
+
+    def __location(self):
+        self._location = []
+        return self._location
+
+
+    def __get_ip(self):
+        try:
+            self._0_node_ip = get('http://ip.42.pl/raw').text
+        except:
+            self._0_node_ip = 'No network connection'
+        return self._0_node_ip  
 
 if __name__ == "__main__":
     Node = UserBuild()

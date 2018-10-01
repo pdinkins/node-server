@@ -1,16 +1,15 @@
 # NODE # 
 # $ERVER$Y$TEM # 
+# CLIENT #
 
-#==============================================================================================#
+'''
 # Node-Server top level client interface:
 ##  Back-end CLI
 
-'''
 This is the higest level client interface meaning that there may be more features 
 buried deeper in the repository. Each level may have a client module. This is 
 not always the case. good luck ~jpd
 '''
-#==============================================================================================#
 
 # ----- IMPORTS ----- #
 from lib import menu 
@@ -174,7 +173,6 @@ networking_menu_dict = {
 setup_md = {
     'User Build': __user_build,
     'Help': __help_menu
-
 }
 #==============================================================================================#
 
