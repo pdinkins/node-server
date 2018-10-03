@@ -17,4 +17,4 @@ if res:
 else:
     sizex, sizey = 80, 25 # can't determine actual size - return default values
 
-print sizex, sizey
+print(sizex, sizey)
