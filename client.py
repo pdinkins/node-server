@@ -17,7 +17,9 @@ from lib import ipfs
 from lib import tpls_server
 from lib import setup
 from lib.ntwrk import pyscanner3 as ps3
-from node import NodeServer
+from lib.network import NetworkClient
+from node import *
+
 
 import datetime
 import platform
@@ -28,6 +30,8 @@ import os
 __login = False
 __run = True
 __title_stat = [0]
+__mm = 0
+__mm_nm = 0
 __help =  """
         _______HELP_PAGE_______
         =======================
@@ -43,7 +47,6 @@ __help =  """
         google it bro.
 
         """
-
 
 #==============================================================================================#
 class Admin:
@@ -65,7 +68,7 @@ def title_bar():
 def title():
     ts = ''
     title_bar()
-    print('__ORION_NET_____\t\t\t\t', dt1.dt())
+    print('__ORION_NET_____\t\t____', dt1.dt())
     if __title_stat[0] == 0:
         print('\t\t|__LOGIN')
         title_bar()
@@ -75,7 +78,10 @@ def title():
         title_bar()
     
     elif __title_stat[0] == 2:
-        print('\t\t|__NODE_ADMIN__')
+        print('\t\t|__NODE_ADMIN___|')
+        print("\t\t\t\t|__", platform.platform())
+        print("\t\t\t\t|__", "Python Version ",platform.python_version())
+        print("\t\t\t\t|__", platform.machine())
         title_bar()
 
 def clear():
@@ -144,18 +150,35 @@ def __tpls_server():
         input('>')
 
 def __ntwrk_menu():
+    refresh_screen()
     menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
 
 def __ipfs_write():
     ipfs.IPFS_add_file('cfg.txt')
     input('>')
 
-def __vim():
-    return os.system("vim")
+def __vim_file_input():
+    vimfile = str(input("file> "))
+    #_vimfile =  str("start vim ") + str(vimfile)
+    #return os.system(_vimfile)
+    __vim(vimfile)
+
+def __vim(file_obj):
+    launch_cmd = str("start vim ") + str(file_obj)
+    os.system(launch_cmd)
+
+def __start_file_io():
+    io_file = str(input("file> "))
+    __start(io_file)
+
+def __start(io_f):
+    start_cmd = str("start py -i ") + str(io_f)
+    os.system(start_cmd)
 
 def __pyscanner3():
     return ps3.main()
 #==============================================================================================#
+nc = NetworkClient()
 
 # Main menu dictionary
 mm = {
@@ -165,9 +188,14 @@ mm = {
 }
 
 networking_menu_dict = {
-    'functional tpls_server': __tpls_server,
-    'write to ipfs': __ipfs_write,
-    'scan LAN': __pyscanner3
+    'TPLS_$ERVER': __tpls_server,
+    'IPFS: Writer': __ipfs_write,
+    '$C4N L4N': __pyscanner3,
+    "$C4N L4N (NC)": nc._network_scan,
+    "Py$canner": nc._pyscanner,
+    "Py$canner2": nc._pyscanner2,
+    "Rever$e_$he11": nc._reverse_shell,
+    "NetworkClient._tpls_server": nc._tpls_server
 }
 
 setup_md = {
@@ -230,6 +258,14 @@ def _client():
         elif command == '2':
             refresh_screen()
             __ntwrk_menu()
+
+        elif command == "vim":
+            refresh_screen()
+            __vim_file_input()
+        
+        elif command == "start":
+            refresh_screen()
+            __start_file_io()
     #==============================================================================================#
 
 

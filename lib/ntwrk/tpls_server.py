@@ -189,4 +189,4 @@ def autolog(message):
         message
     ))
 
-start_handshake()
+#start_handshake()

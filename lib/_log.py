@@ -6,11 +6,11 @@ USE:
 TODO:
     add functionality so logging can be dynamically turned on and off. 
 '''
+import inspect
+import logging
+import datetime as dt
 
 def log(message):
-    import inspect
-    import logging
-    import datetime as dt
     logging.basicConfig(level=logging.DEBUG, format='%(message)s')
     func = inspect.currentframe().f_back.f_code
     logging.debug("{}\t{}\t{}\t{}".format(

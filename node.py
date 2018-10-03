@@ -26,9 +26,7 @@ _b_tpls = True
 _0_node_ip = "192.168.1.7"
 _0_node_port = 1423
 
-###### 0_NODE_SERVER ######
-class NodeServer:
-    """
+_node_help =     """
     The node server adopts from multiple different classes.
     Gate keeper for private networks. Facilitates custom user functions. 
 
@@ -59,6 +57,12 @@ class NodeServer:
 
     """
 
+def nodehelp():
+    print(_node_help)
+
+###### 0_NODE_SERVER ######
+class NodeServer:
+
     def __init__(self):
         self._http_server = self.__http_server
         self._ipfs_node = self.__ipfs_node
@@ -68,13 +72,11 @@ class NodeServer:
 
     def __http_server(self):
         # host files bound to tcp port
-        #_0_sxc
         os.system("start py -m http.server --bind 192.168.1.7")
 
 
     def __ipfs_node(self):
         # ipfs node connection through py-ipfs-api
-        #_0_sxc
         __debug = False
 
         if __debug:
@@ -86,13 +88,11 @@ class NodeServer:
 
     def __client_interface(self):
         # cli or menu based backend interface
-        #
         self.__ipfs_client = ipfsapi.client.Client()
         return self.__ipfs_client
    
     def __tpls_server(self, _type):
         # spawn different kinds of tpls instances 
-        
         # functional transport layer security server
         # begin one time functional tpls instance
         if _type == 0:
@@ -114,7 +114,6 @@ class NodeServer:
     
 
     def __client_interface_dir(self):
-        # list of 
         return dir(self._client_interface())
 
 
