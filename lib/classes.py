@@ -30,3 +30,7 @@ class Idea:
         self.value = value
         self.creator = creator     # userfullname
 
+
+
+
+

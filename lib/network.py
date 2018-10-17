@@ -16,6 +16,7 @@ class NetworkClient:
         self._pyscanner = self.__pyscanner
         self._reverse_shell = self.__reverse_shell
         self._tpls_server = self.__tpls_server
+        self._axis_cam = self.__axis_cam
 
     def __network_scan(self):
         print('__NetworkClient.__network_scan()')
@@ -41,4 +42,8 @@ class NetworkClient:
         print('__NetworkClient.__tpls_server()')
         from ntwrk import tpls_server
         return tpls_server
-        
+    
+    def __axis_cam(self):
+        print('__NetworkClient.__axis_cam()')
+        from ntwrk import axis
+

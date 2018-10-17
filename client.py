@@ -25,6 +25,7 @@ import datetime
 import platform
 from time import sleep
 import os
+import shutil
 
 # CLIENT VARIABLES 
 __login = False
@@ -33,17 +34,18 @@ __title_stat = [0]
 __mm = 0
 __mm_nm = 0
 __help =  """
-        _______HELP_PAGE_______
-        =======================
-        
+        (command): (description) 
+        0: logout
+        1: main menu
+        2: networking menu 
+        3: python shell
+        tpls: transport level security server
+
         have you even read the source code? 
-        
         did you actually read it though?
-
-        seriously read the source for documentation though
-        
+        seriously though, read the source for documentation.
         the best help is the help you give yourself.
-
+        when all else fails.
         google it bro.
 
         """
@@ -63,7 +65,7 @@ class DateTime():
 
 #==============================================================================================#
 def title_bar():
-    print("=" * 80)
+    print("=" * shutil.get_terminal_size().height)
 
 def title():
     ts = ''
@@ -163,6 +165,10 @@ def __vim_file_input():
     #return os.system(_vimfile)
     __vim(vimfile)
 
+def _vim_top_level():
+    __vim("client.py")
+    __vim("node.py")
+
 def __vim(file_obj):
     launch_cmd = str("start vim ") + str(file_obj)
     os.system(launch_cmd)
@@ -184,7 +190,8 @@ nc = NetworkClient()
 mm = {
     'Directory Info': rfsm,
     'Setup Menu': __setup_menu,
-    'Networking Menu': __ntwrk_menu
+    'Networking Menu': __ntwrk_menu,
+    'Vim-Top-Level': _vim_top_level
 }
 
 networking_menu_dict = {
@@ -246,7 +253,11 @@ def _client():
         
         elif command == 'tpls':
             __tpls_server()
- 
+
+        elif command == "vim":
+            refresh_screen()
+            __vim_file_input()
+        
         elif command == "help":
             refresh_screen()
             __help_menu()
@@ -259,11 +270,7 @@ def _client():
             refresh_screen()
             __ntwrk_menu()
 
-        elif command == "vim":
-            refresh_screen()
-            __vim_file_input()
-        
-        elif command == "start":
+        elif command == "3":
             refresh_screen()
             __start_file_io()
     #==============================================================================================#
