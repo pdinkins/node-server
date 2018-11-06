@@ -125,7 +125,6 @@ def fid_analyze(fid):
     if fid == '0':
         return 0
     elif fid == 'ipfs':
-        autolog('0_NETWORK_PROTOCOL')
         os.system('start ipfs daemon')
     elif fid == '1':
         autolog('1_np')
