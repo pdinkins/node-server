@@ -31,15 +31,16 @@ class config:
         self.port = 1423
         self.tw = ['tpls']
 
+node = config()
 
-local_ip = "192.168.1.7"
-n_port = 1423
-tw = ['tpls']
-trusted_wallet_hash = tw
+local_ip = node.ip
+n_port = node.port
+tw = node.tw
+trusted_wallet_hash = node.tw
 handshake = []
 run = True
 
-# han
+
 def chash_0(input_string):  
     handshake.clear()
     autolog('chash_0: input')
@@ -102,7 +103,7 @@ def client_thread(conn, ip, port, MAX_BUFFER_SIZE = 4096):
         siz = sys.getsizeof(init_chash_b)
         if  siz >= MAX_BUFFER_SIZE:
             print("The length of input is probably too long: {}".format(siz))
-        
+
         # decode the FID 
         data = data_bytes.decode('utf-8')
         autolog(data)
@@ -123,7 +124,7 @@ def fid_analyze(fid):
     msg = 'FID: ' + str(fid)
     autolog(msg)
     if fid == '0':
-        return 0
+        autolog('0_NETWORK_PROTOCOL')
     elif fid == 'ipfs':
         os.system('start ipfs daemon')
     elif fid == '1':
