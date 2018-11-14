@@ -3,6 +3,7 @@
 # This module exists as a tunnel connecting everything to the client module
 
 '''
+import datetime
 
 # Data and functions for users
 class User:
@@ -32,5 +33,15 @@ class Idea:
 
 
 
+#==============================================================================================#
+class Admin:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+class DateTime():
+    def dt(self):
+        return datetime.datetime.now()
+#==============================================================================================#
 
 
