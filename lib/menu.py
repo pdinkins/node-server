@@ -1,6 +1,4 @@
-# NODE # 
-# $ERVER$Y$TEM # 
-
+# NODE $ERVER$Y$TEM ## MENU # 
 '''
 # Menu Module:
 # displays a menu, user choice, choice function execution.

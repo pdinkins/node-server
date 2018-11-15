@@ -1,31 +1,35 @@
-# NODE # 
-# $ERVER$Y$TEM # 
-# CLIENT #
-
+# NODE $ERVER$Y$TEM ## CLIENT #
 '''
-# Node-Server top level client interface:
-##  Back-end CLI
+Node-Server top level client interface: Back-end CLI
 
-This is the higest level client interface meaning that there may be more features 
-buried deeper in the repository. Each level may have a client module. This is 
-not always the case. good luck ~jpd
+Interacting with the client is easy once you learn how to use it. start by typing help then
+hitting enter. this will launch the help menu. from here its pretty self explanitory. 
+read the source code for more in depth instructs and to figure out the other commands and
+functions. this is the higest level client interface meaning that there may be more features 
+buried deeper in the repository. each lower level may have a pipe to the top level client
+module. this is not always the case. 
+
+good luck
+~jpd
 '''
-
-# ----- IMPORTS ----- #
+# ------ IMPORTS ------ #
+# Local imports
 from lib import menu 
 from lib import ipfs
 from lib import tpls_server
 from lib import setup
 from lib.ntwrk import pyscanner3 as ps3
 from lib.network import NetworkClient
+from lib.classes import Admin, DateTime
 from node import *
 
-
+# python builtin imports
 import datetime
 import platform
 from time import sleep
 import os
 import shutil
+# ---------------------- #
 
 # CLIENT VARIABLES 
 __login = False
@@ -40,35 +44,23 @@ __help =  """
         2: networking menu 
         3: python shell
         tpls: transport level security server
+        help: help menu (you are here)
 
         have you even read the source code? 
         did you actually read it though?
-        seriously though, read the source for documentation.
+        seriously though read the source for documentation.
         the best help is the help you give yourself.
-        when all else fails.
-        google it bro.
+        when all else fails,
+        google it.
 
         """
 
-#==============================================================================================#
-class Admin:
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-class DateTime():
-    def dt(self):
-        return datetime.datetime.now()
-#==============================================================================================#
-
-
-
-#==============================================================================================#
+# Horizontal Title Bar
 def title_bar():
     print("=" * shutil.get_terminal_size().columns)
 
+# Title Bar Information
 def title():
-    ts = ''
     title_bar()
     print('__ORION_NET_____\t\t____', dt1.dt())
     if __title_stat[0] == 0:
@@ -82,10 +74,11 @@ def title():
     elif __title_stat[0] == 2:
         print('\t\t|__NODE_ADMIN___|')
         print("\t\t\t\t|__", platform.platform())
-        print("\t\t\t\t|__", "Python Version ",platform.python_version())
+        print("\t\t\t\t|__", "Python Version:",platform.python_version())
         print("\t\t\t\t|__", platform.machine())
         title_bar()
 
+# Determine the system and clear the terminal screen
 def clear():
     ops = platform.system()
     if ops == 'Darwin':
@@ -93,18 +86,25 @@ def clear():
     else:
         os.system('cls')
 
+# Clears the screen then displays the title bar
 def refresh_screen():
     clear()
     title()
-#=========================================================================================#
 
+# Clear and Append the __title_stat variable
+def ts_c_a(ts_id):
+    __title_stat.clear()
+    __title_stat.append(ts_id)
 
-#===============================EXTERIOR FUNCTION CALLS===================================#
+# Displays directory information
+# TODO: clean up naming and function 
 def rfsm():
     path = input('path>')
     p = rfs(path)
     print(p)
 
+# Dispays directory information 
+# TODO: clean up naming and function 
 def rfs(pathname):
     index = 0
     tsizevar = 0
@@ -126,20 +126,25 @@ def rfs(pathname):
 
     returndata = {'indexed files': index,'totalsize': tsizevar}
     print(returndata)
-    input('>')
+    input('enter>')
     return returndata
  
+# Display Setup Main Menu
 def __setup_menu():
     menu.initialize_menu(setup_md, "SETUP MAIN MENU")
 
+# Execute user build sequence
 def __user_build():
     ub = setup.UserBuild()
-    input('>>')
+    input('enter>')
 
+# Display help information
 def __help_menu():
     print(__help)
-    input('> ')
+    nodehelp()
+    input('enter>')
 
+# Display TPLS types; user choice; launch tpls type
 def __tpls_server():
     try:
         print('[0] single instance of tpls')
@@ -149,73 +154,86 @@ def __tpls_server():
         NodeServer()._tpls_server(_id)
     except ValueError:
         print("bruh thats not an option")
-        input('>')
+        input('enter>')
 
+# Networking Main Menu
 def __ntwrk_menu():
     refresh_screen()
     menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
 
-def __ipfs_write():
-    ipfs.IPFS_add_file('cfg.txt')
-    input('>')
+# IPFS Reader function 
+def __ipfs_read():
+    # TODO: add functionality to read files from IPFS
+    input("ipfs_read>")
 
+#IPFS Writer function
+def __ipfs_write():
+    # TODO: add more functionality
+    ipfs.IPFS_add_file('cfg.txt')
+    input('ipfs_write>')
+
+# Launch vim window with user inputted file name
+# TODO: directory selection tool/menu
 def __vim_file_input():
-    vimfile = str(input("file> "))
-    #_vimfile =  str("start vim ") + str(vimfile)
-    #return os.system(_vimfile)
+    vimfile = str(input("file name> "))
     __vim(vimfile)
 
+# Launch Vim windows of the client and node top level modules
 def _vim_top_level():
     __vim("client.py")
     __vim("node.py")
 
+# Launch Vim window with given file object
 def __vim(file_obj):
     launch_cmd = str("start vim ") + str(file_obj)
     os.system(launch_cmd)
 
+# Launch Interactive Python Shell
 def __start_file_io():
     io_file = str(input("file> "))
     __start(io_file)
 
+# function wrapper to start interactive python shell with given python filename
+# TODO: Add multiplatform support
 def __start(io_f):
     start_cmd = str("start py -i ") + str(io_f)
     os.system(start_cmd)
 
+# Local Network Scan 192.168.1.x:xxxxx
 def __pyscanner3():
     return ps3.main()
-#==============================================================================================#
+
+# instantiaite the NetworkClient class
 nc = NetworkClient()
 
-# Main menu dictionary
+# Main Menu Dictionary
 mm = {
     'Directory Info': rfsm,
     'Setup Menu': __setup_menu,
     'Networking Menu': __ntwrk_menu,
-    'Vim-Top-Level': _vim_top_level
-}
+    'Vim-Top-Level': _vim_top_level}
 
+# Networking Menu Dictionary
 networking_menu_dict = {
     'TPLS_$ERVER': __tpls_server,
-    'IPFS: Writer': __ipfs_write,
     '$C4N L4N': __pyscanner3,
     "$C4N L4N (NC)": nc._network_scan,
     "Py$canner": nc._pyscanner,
     "Py$canner2": nc._pyscanner2,
-    "Rever$e_$he11": nc._reverse_shell,
-    "NetworkClient._tpls_server": nc._tpls_server
-}
+    "Rever$e_$he11": nc._reverse_shell}
 
+# IPFS Menu Dictionary
+ipfs_md = {
+    'IPFS: Reader': __ipfs_read,
+    'IPFS: Writer': __ipfs_write}
+
+# Setup Menu Dictionary
 setup_md = {
     'User Build': __user_build,
-    'Help': __help_menu
-}
-#==============================================================================================#
+    'Help': __help_menu}
 
-#__menu = menu.newMenu(mm, "main menu")
-def ts_c_a(ts_id):
-    __title_stat.clear()
-    __title_stat.append(ts_id)
-    
+# ================ LOGIN SEQUENCE ================ #
+
 def _client():
     if __login == False:
         ts_c_a(2)
@@ -238,46 +256,58 @@ def _client():
                 print('You are logging in as ', usn)
                 refresh_screen()
                 break
-    #==============================================================================================#
 
-    #==============================================================================================#
-    ######## APP INTERFACE ########
+# ==========#################### APP INTERFACE #####################============ #
+# TODO: push the entire run loop inside the login loop for security purposes
+# TODO: add auto login functionality
+# TODO: function class; client code reduction and optimization; 
     while __run:
         refresh_screen()
         command = input('>')
-        if command == '0':
-            refresh_screen()
-            print('LOGING OUT OF THE MATRIX')
-            clear()
-            break
         
-        elif command == 'tpls':
+        # Commands
+
+        # tpls : Launches a tpls server
+        if command == 'tpls':
             __tpls_server()
 
+        # vim : Vim Vindow
         elif command == "vim":
             refresh_screen()
             __vim_file_input()
         
+        # help : Help Window 
         elif command == "help":
             refresh_screen()
             __help_menu()
+        
+        # 0 : Quits the program
+        elif command == '0':
+            refresh_screen()
+            print('LOGING OUT OF THE MATRIX')
+            clear()
+            break
 
+        # 1 : Main Menu
         elif command == '1':
             refresh_screen()              
             menu.initialize_menu(mm, 'PYTHOS MAIN MENU')
-
+        
+        # 2 : Networking Main Menu 
         elif command == '2':
             refresh_screen()
             __ntwrk_menu()
 
+        # 3 : Interactive Python Shell
         elif command == "3":
             refresh_screen()
             __start_file_io()
-    #==============================================================================================#
 
 
 if __name__ == "__main__":
-    #define the class instances
+    # create admin user
     admin1 = Admin('admin', 'password')
+    # create datetime object
     dt1 = DateTime()
+    # launch the client
     _client()

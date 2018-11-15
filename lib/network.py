@@ -1,11 +1,9 @@
-# NODE # 
-# $ERVER$Y$TEM # 
-# NETWORK #
-
+# NODE $ERVER$Y$TEM ## NETWORK #
 
 class NetworkClient:
     '''
     NetworkClient class requires the NodeBuild class containing import config data
+    Controls networking module import and namespace elevation
     '''
     def __init__(self, **NodeBuild):
         #self._nodebuild = NodeBuild
@@ -15,35 +13,29 @@ class NetworkClient:
         self._pyscanner2 = self.__pyscanner2
         self._pyscanner = self.__pyscanner
         self._reverse_shell = self.__reverse_shell
-        self._tpls_server = self.__tpls_server
         self._axis_cam = self.__axis_cam
 
     def __network_scan(self):
         print('__NetworkClient.__network_scan()')
-        from ntwrk import pyscanner3
+        from lib.ntwrk import pyscanner3
         return pyscanner3
     
     def __pyscanner2(self):
         print('__NetworkClient.__pyscanner2()')
-        from ntwrk import pyscanner2
+        from lib.ntwrk import pyscanner2
         return pyscanner2
 
     def __pyscanner(self):
         print('__NetworkClient.__pyscannern()')
-        from ntwrk import pyscanner
+        from lib.ntwrk import pyscanner
         return pyscanner
     
     def __reverse_shell(self):
         print('__NetworkClient.__reverse_shell()')
-        from ntwrk import reverseshell
+        from lib.ntwrk import reverseshell
         return reverseshell
-    
-    def __tpls_server(self):
-        print('__NetworkClient.__tpls_server()')
-        from ntwrk import tpls_server
-        return tpls_server
     
     def __axis_cam(self):
         print('__NetworkClient.__axis_cam()')
-        from ntwrk import axis
+        from lib.ntwrk import axis
 

@@ -1,16 +1,13 @@
-# NODE # 
-# $ERVER$Y$TEM # 
-
+# NODE $ERVER$Y$TEM ## TPLS SERVER # 
 '''
-# tpls_server.py
-
-functional implementation of the 
-'transport layer security sever' or tpls_server
+functional implementation of the 'transport layer security sever' or tpls_server
 
 this code works for the most part
 
 when i wrote this only God and I understood it. 
 now only God does
+
+TODO : FIX THIS
 '''
 import logging
 import datetime as dt
@@ -185,9 +182,6 @@ def autolog(message):
         func.co_name,
         message
     ))
-
-
-
 
 
 class TPLS_Server:

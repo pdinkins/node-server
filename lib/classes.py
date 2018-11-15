@@ -1,20 +1,20 @@
+# NODE $ERVER$Y$TEM ## CLASSES #
 '''
-# CLASSES
-# This module exists as a tunnel connecting everything to the client module
+Classes are used to create consistent data structures and namespaces 
+within other modules in the repository. 
+'''
 
-'''
+# -- Imports -- # 
 import datetime
 
-# Data and functions for users
-class User:
 
+class User:
     def __init__(self, first, last):
         self.first = first
         self.last = last
         self.reputation = 0.0
         self.fullname = self.fullname_construction()
 
-    # fullname
     def fullname_construction(self):
         return '{}{}'.format(self.first, self.last)
         
@@ -22,26 +22,25 @@ class User:
     def reputation_calc(self):
         category_rep = self.reputation
 
-# Data and functions for ideas
-class Idea:
-    
-    def __init__(self, title, category, value, creator):
-        self.title = title
-        self.category = category
-        self.value = value
-        self.creator = creator     # userfullname
-
-
-
-#==============================================================================================#
 class Admin:
+    # TODO: make the admin class an inherited class under the user
     def __init__(self, username, password):
         self.username = username
         self.password = password
 
+class Idea:
+    def __init__(self, title, category, value, creator):
+        self.title = title
+        self.category = category
+        self.value = value
+        self.creator = creator  
+
 class DateTime():
     def dt(self):
         return datetime.datetime.now()
-#==============================================================================================#
 
-
+class Command:
+    def __init__(self, cmd, func):
+        self._command = cmd
+        self._function = func
+    

@@ -1,7 +1,4 @@
-# NODE # 
-# $ERVER$Y$TEM # 
-# SETUP #
-
+# NODE $ERVER$Y$TEM ## SETUP #
 '''
 # SETUP
 #
@@ -12,7 +9,7 @@
 # 
 # user = setup.UserBuild()
 '''
-
+# ------ IMPORTS ------ #
 # python module imports
 import hashlib
 from requests import get
@@ -26,12 +23,12 @@ except ModuleNotFoundError:
     from _log import log
     from writer import FileObject, Write2file
 
+
 class UserBuild:
     '''
-        # for testing current cpu system configuration 
-        # and checks for corrupted or out of date software
+        # sniff current cpu system configuration 
+        # TODO: check for corrupted or out of date software
     '''
-
     def __init__(self):
         self.operating_sys = self.os_sys()
         self.node_ip = self.get_ip()

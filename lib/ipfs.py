@@ -1,5 +1,4 @@
-# NODE # 
-# $ERVER$Y$TEM # 
+# NODE $ERVER$Y$TEM ## IPFS # 
 '''
 # IPFS
 # interact with the ipfs network 
@@ -59,7 +58,7 @@ class IPFS_add_file:
         self.__filehash = self.file2add["Hash"]
         # ensure the transfer went through by printing the filehash and file contents
         print(self.__filehash)
-        print(self.api_connection.cat(self.__filehash))
+        self.api_connection.cat(self.__filehash)
         return self.__filehash
 
 
