@@ -1,16 +1,13 @@
 # Node-Server
-
-##
-command : description 
-0: logout
-1: main menu
-2: networking menu 
-3: python shell
-tpls: transport level security server
-help: help menu (you are here)
-
-
 The node server adopts from multiple different classes. Gate keeper for private networks. Facilitates custom user functions. 
+
+    command : description 
+    0: logout
+    1: main menu
+    2: networking menu 
+    3: python shell
+    tpls: transport level security server
+    help: help menu (you are here)
 
     IPFS Daemon must be running 
     IPFSAPI_IP: 127.0.0.1:5001/5002
