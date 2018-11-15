@@ -30,3 +30,5 @@ The node server adopts from multiple different classes. Gate keeper for private 
         > node wallet
             > trusted peers
             > data store hashes
+
+v0.0.49
