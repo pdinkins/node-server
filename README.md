@@ -1,6 +1,6 @@
 # Node-Server
 
-(command): (description) 
+command : description 
 0: logout
 1: main menu
 2: networking menu 
