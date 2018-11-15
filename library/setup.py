@@ -17,8 +17,8 @@ import platform
 
 # local lib imports
 try:
-    from lib._log import log
-    from lib.writer import FileObject, Write2file
+    from library._log import log
+    from library.writer import FileObject, Write2file
 except ModuleNotFoundError:
     from _log import log
     from writer import FileObject, Write2file

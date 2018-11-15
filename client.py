@@ -14,13 +14,13 @@ good luck
 '''
 # ------ IMPORTS ------ #
 # Local imports
-from lib import menu 
-from lib import ipfs
-from lib import tpls_server
-from lib import setup
-from lib.ntwrk import pyscanner3 as ps3
-from lib.network import NetworkClient
-from lib.classes import Admin, DateTime
+from library import menu 
+from library import ipfs
+from library import tpls_server
+from library import setup
+from library.ntwrk import pyscanner3 as ps3
+from library.network import NetworkClient
+from library.classes import Admin, DateTime
 from node import *
 
 # python builtin imports

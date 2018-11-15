@@ -1,8 +1,8 @@
 # NODE $ERVER$Y$TEM ## NODE #
 # -------- IMPORTS --------- # 
 # Local imports
-from lib import tpls_server
-from lib import ipfs
+from library import tpls_server
+from library import ipfs
 
 # python builtin imports
 import os

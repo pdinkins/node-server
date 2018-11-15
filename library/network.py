@@ -17,25 +17,25 @@ class NetworkClient:
 
     def __network_scan(self):
         print('__NetworkClient.__network_scan()')
-        from lib.ntwrk import pyscanner3
+        from library.ntwrk import pyscanner3
         return pyscanner3
     
     def __pyscanner2(self):
         print('__NetworkClient.__pyscanner2()')
-        from lib.ntwrk import pyscanner2
+        from library.ntwrk import pyscanner2
         return pyscanner2
 
     def __pyscanner(self):
         print('__NetworkClient.__pyscannern()')
-        from lib.ntwrk import pyscanner
+        from library.ntwrk import pyscanner
         return pyscanner
     
     def __reverse_shell(self):
         print('__NetworkClient.__reverse_shell()')
-        from lib.ntwrk import reverseshell
+        from library.ntwrk import reverseshell
         return reverseshell
     
     def __axis_cam(self):
         print('__NetworkClient.__axis_cam()')
-        from lib.ntwrk import axis
+        from library.ntwrk import axis
 
