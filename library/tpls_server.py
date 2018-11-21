@@ -71,28 +71,20 @@ def client_thread(conn, ip, port, MAX_BUFFER_SIZE = 4096):
     # incoming user wallet hash, id of user/node
     init_chash_b = conn.recv(MAX_BUFFER_SIZE)
     autolog('client_thread: ')
-    
-    
     # MAX_BUFFER_SIZE is how big the message can be
     siz = sys.getsizeof(init_chash_b)
     if  siz >= MAX_BUFFER_SIZE:
         print("The length of input is probably too long: {}".format(siz))
     autolog('client_thread: ')
-    
     # decode incoming user hash 
     chash_0_r = init_chash_b.decode("utf8")
     autolog(chash_0_r)
-
     # analyze incoming user hash
     res = chash_0(chash_0_r)
     autolog('chash -> analyer')
-    
-    
     vysl = res.encode("utf8")  # encode the result string
     conn.sendall(vysl)  # send it to client
-    
-    
-    
+    # check the handshake status and execute functions based on it
     if handshake[0] == 1:
         # fid tx
         autolog('FID INCOMING')
@@ -100,7 +92,6 @@ def client_thread(conn, ip, port, MAX_BUFFER_SIZE = 4096):
         siz = sys.getsizeof(init_chash_b)
         if  siz >= MAX_BUFFER_SIZE:
             print("The length of input is probably too long: {}".format(siz))
-
         # decode the FID 
         data = data_bytes.decode('utf-8')
         autolog(data)
@@ -108,13 +99,11 @@ def client_thread(conn, ip, port, MAX_BUFFER_SIZE = 4096):
         # responce after fid execute
         replyb = 'DATA TRANSFER COMPLETE'
         conn.sendall(replyb.encode('utf-8'))
-       
+    # close all the connections
     else:
         conn.close()  # close connection
-
-    arnold = 'CONNECTION ' + ip + ':' + port + " TERMINATED"
-    autolog(arnold)
-
+        arnold = 'CONNECTION ' + ip + ':' + port + " TERMINATED"
+        autolog(arnold)
 
 
 def fid_analyze(fid):
@@ -143,6 +132,7 @@ def start_handshake():
         soc.bind((local_ip, n_port))
         autolog('SOCKET BIND COMPLETE')
     except socket.error as msg:
+        # TODO: move this import out of the function
         import sys
         print(dt.datetime.now(), 'BIND_FAIL_ERROR: ' + str(sys.exc_info()))
         sys.exit()
@@ -150,7 +140,9 @@ def start_handshake():
     #Start listening on socket
     soc.listen(10)
     autolog('SOCKET LISTENING')
+    
     # for handling task in separate jobs we need threading
+    #  TODO: move this import out of the function
     from threading import Thread
 
     # this will make an infinite loop needed for 

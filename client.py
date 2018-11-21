@@ -161,16 +161,25 @@ def __ntwrk_menu():
     refresh_screen()
     menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
 
+# user input wrapper function to read and write files to ipfs manually
+def __ipfs_io():
+    choice = str(input('[r/w] read or write> ').lower())
+    if choice == "r":
+        filehash = input("filehash> ")
+        __ipfs_read(filehash)
+    elif choice == "w":
+        infile = input("filename> ")
+        __ipfs_write(infile)
+    else:
+        pass
+
 # IPFS Reader function 
-def __ipfs_read():
-    # TODO: add functionality to read files from IPFS
-    input("ipfs_read>")
+def __ipfs_read(filehash):
+    ipfs.ipfsnode.reader(filehash)
 
 #IPFS Writer function
-def __ipfs_write():
-    # TODO: add more functionality
-    ipfs.IPFS_add_file('cfg.txt')
-    input('ipfs_write>')
+def __ipfs_write(io_file):
+    ipfs.ipfsnode.writer(io_file)
 
 # Launch vim window with user inputted file name
 # TODO: directory selection tool/menu
