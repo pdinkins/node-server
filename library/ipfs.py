@@ -23,7 +23,8 @@ class IPFS_API:
     def __init__(self):
         self.ipfslist = ['Addresses', 'ID', 'AgentVersion', "ProtocolVersion", "PublicKey" ]
         self.ipfsapi_ip = '127.0.0.1'
-        self.ipfsapi_port = 5002
+        self.ipfsapi_port = 5001
+        self.ipfsapi_port2 = 5002
         self.debug = False
         self._api_connection = self.initialize_ipfsapi_connection()
         self.reader = self._ipfs_reader
@@ -31,7 +32,10 @@ class IPFS_API:
         self.bitswap = self._ipfs_bitswap_stat
 
     def initialize_ipfsapi_connection(self):
-        self.api = ipfsapi.connect(self.ipfsapi_ip, self.ipfsapi_port)
+        try:
+            self.api = ipfsapi.connect(self.ipfsapi_ip, self.ipfsapi_port)
+        except ConnectionRefusedError:
+            self.api = ipfsapi.connect(self.ipfsapi_ip, self.ipfsapi_port2)
         self.apiid = self.api.id()
         self.ipfs_addresses = self.apiid[self.ipfslist[0]]
         if self.debug != False:

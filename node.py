@@ -55,7 +55,6 @@ _node_help =     """
 def nodehelp():
     print(_node_help)
 
-
 class NodeServer:
     '''
     NodeServer
@@ -82,6 +81,7 @@ class NodeServer:
     def __ipfs_node(self):
         # Determines whether or not debug shell is displayed on launch of ipfs daemon instance
         __debug = False 
+        # TODO: add multiplatform functionalality to this asap
         if __debug:
             os.system("start ipfs daemon --debug")
         else:
