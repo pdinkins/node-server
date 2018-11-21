@@ -44,3 +44,15 @@ class Command:
         self._command = cmd
         self._function = func
     
+class ipAddress:
+    def __init__(self, octet1, octet2, octet3, octet4):
+        self.octet1 = octet1
+        self.octet2 = octet2
+        self.octet3 = octet3
+        self.octet4 = octet4
+        self.ip = self.__ip_str()
+    
+    def __ip_str(self):
+        #self.__ip_string = str(self.octet1) + "." + str(self.octet2) + "." + str(self.octet3) + "." + str(self.octet4)
+        self.__ip_string = str("{}.{}.{}.{}").format(self.octet1, self.octet2, self.octet3, self.octet4)
+        return self.__ip_string 

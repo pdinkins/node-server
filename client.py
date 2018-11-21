@@ -32,7 +32,7 @@ import shutil
 # ---------------------- #
 
 # CLIENT VARIABLES 
-__login = False
+__login = True
 __run = True
 __title_stat = [0]
 __mm = 0
@@ -161,6 +161,11 @@ def __ntwrk_menu():
     refresh_screen()
     menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
 
+# node launch 
+def node_launch():
+    node = NodeServer()
+    node._ipfs_node()
+
 # user input wrapper function to read and write files to ipfs manually
 def __ipfs_io():
     choice = str(input('[r/w] read or write> ').lower())
@@ -175,11 +180,13 @@ def __ipfs_io():
 
 # IPFS Reader function 
 def __ipfs_read(filehash):
-    ipfs.ipfsnode.reader(filehash)
+    # ipfsnode.reader(filehash)
+    pass
 
 #IPFS Writer function
 def __ipfs_write(io_file):
-    ipfs.ipfsnode.writer(io_file)
+    # ipfsnode.writer(io_file)
+    pass
 
 # Launch vim window with user inputted file name
 # TODO: directory selection tool/menu
@@ -229,7 +236,8 @@ networking_menu_dict = {
     "$C4N L4N (NC)": nc._network_scan,
     "Py$canner": nc._pyscanner,
     "Py$canner2": nc._pyscanner2,
-    "Rever$e_$he11": nc._reverse_shell}
+    "Rever$e_$he11": nc._reverse_shell,
+    'node launch': node_launch}
 
 # IPFS Menu Dictionary
 ipfs_md = {
@@ -241,9 +249,10 @@ setup_md = {
     'User Build': __user_build,
     'Help': __help_menu}
 
-# ================ LOGIN SEQUENCE ================ #
 
-def _client():
+
+# ================ LOGIN SEQUENCE ================ #
+def login():
     if __login == False:
         ts_c_a(2)
 
@@ -264,53 +273,53 @@ def _client():
                 refresh_screen()
                 print('You are logging in as ', usn)
                 refresh_screen()
-                break
 
 # ==========#################### APP INTERFACE #####################============ #
-# TODO: push the entire run loop inside the login loop for security purposes
 # TODO: add auto login functionality
 # TODO: function class; client code reduction and optimization; 
-    while __run:
-        refresh_screen()
-        command = input('>')
-        
-        # Commands
+                while __run:
+                    refresh_screen()
+                    command = input('>')
+                    
+                    # Commands
 
-        # tpls : Launches a tpls server
-        if command == 'tpls':
-            __tpls_server()
+                    # tpls : Launches a tpls server
+                    if command == 'tpls':
+                        __tpls_server()
 
-        # vim : Vim Vindow
-        elif command == "vim":
-            refresh_screen()
-            __vim_file_input()
-        
-        # help : Help Window 
-        elif command == "help":
-            refresh_screen()
-            __help_menu()
-        
-        # 0 : Quits the program
-        elif command == '0':
-            refresh_screen()
-            print('LOGING OUT OF THE MATRIX')
-            clear()
-            break
+                    # vim : Vim Vindow
+                    elif command == "vim":
+                        refresh_screen()
+                        __vim_file_input()
+                    
+                    # help : Help Window 
+                    elif command == "help":
+                        refresh_screen()
+                        __help_menu()
 
-        # 1 : Main Menu
-        elif command == '1':
-            refresh_screen()              
-            menu.initialize_menu(mm, 'PYTHOS MAIN MENU')
-        
-        # 2 : Networking Main Menu 
-        elif command == '2':
-            refresh_screen()
-            __ntwrk_menu()
+                    # 1 : Main Menu
+                    elif command == '1':
+                        refresh_screen()              
+                        menu.initialize_menu(mm, 'PYTHOS MAIN MENU')
+                    
+                    # 2 : Networking Main Menu 
+                    elif command == '2':
+                        refresh_screen()
+                        __ntwrk_menu()
 
-        # 3 : Interactive Python Shell
-        elif command == "3":
-            refresh_screen()
-            __start_file_io()
+                    # 3 : Interactive Python Shell
+                    elif command == "3":
+                        refresh_screen()
+                        __start_file_io()
+                        
+                    # 0 : Quits the program
+                    elif command == '0':
+                        refresh_screen()
+                        print('LOGING OUT OF THE MATRIX')
+                        clear()
+                        break
+
+        
 
 
 if __name__ == "__main__":
@@ -319,4 +328,4 @@ if __name__ == "__main__":
     # create datetime object
     dt1 = DateTime()
     # launch the client
-    _client()
+    login()

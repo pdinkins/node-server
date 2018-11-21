@@ -57,5 +57,3 @@ class IPFS_API:
 
     def _ipfs_client(self):
         pass
-
-ipfsnode = IPFS_API()

@@ -89,7 +89,8 @@ class NodeServer:
         # 3 second delay to allow the daemon to start up
         time.sleep(3)
         # test ipfs api connection; displays some debug info
-        ipfs.Ipfs_API()
+        self.__ipfsnode = ipfs.IPFS_API()
+        return self.__ipfsnode
 
     # Create different types of TPLS Server instances
     def __tpls_server(self, _type):
