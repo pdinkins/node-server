@@ -183,7 +183,6 @@ class TPLS_Server:
     functional implementation of the tpls server. 
     
     '''
-    import sys
     import socket as soc
     from threading import Thread
 
@@ -208,12 +207,13 @@ class TPLS_Server:
     
     def _check_size(self, bytes_object, MAX_BUFFER_SIZE = 4096):
         self.logger.debug('_check_size')
-        return self.sys.getsizeof(bytes_object)
+        return sys.getsizeof(bytes_object)
 
 
     # Active Functions #
     def open_socket(self):
         self.logger.debug('open_socket')
+        # TODO: add security / config loading
         self._socket = self.soc.socket(self.soc.AF_INET, self.soc.SOCK_STREAM)
         self._socket.setsockopt(self.soc.SOL_SOCKET, self.soc.SO_REUSEADDR, 1)
         self._socket.bind(self._socket_tup)
