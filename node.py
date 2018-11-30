@@ -9,20 +9,9 @@ import os
 import time
 
 # third party package imports
-import ipfsapi
+#import ipfsapi
 # -------------------------- # 
 
-# TODO: get rid of these or figure out a better use
-# local bool variable to control what the node server launches on start up
-#_b_http = True
-#_b_ipfs = True
-#_b_cli = True
-#_b_tpls = True
-
-# TODO: generate these variables from the config file
-# node networking variables
-_0_node_ip = "192.168.1.x"
-_0_node_port = 11111
 
 _node_help =     """
     The node server adopts from multiple different classes.
@@ -61,16 +50,23 @@ class NodeServer:
     '''
     def __init__(self):
         self._http_server = self.__http_server
-        self._ipfs_node = self.__ipfs_node
-        self._client_interface = self.__client_interface
+        self.__ipfs_node()
+        self._ipfs_client_interface = self.__client_interface
         self._tpls_server = self.__tpls_server
         self._cli_dir = self.__client_interface_dir
+        # TODO: get rid of these or figure out a better use
+        # local bool variable to control what the node server launches on start up
+        #_b_http = True
+        #_b_ipfs = True
+        #_b_cli = True
+        #_b_tpls = True
 
-    # Instantiates an PY-IPFS-API client object
-    def __client_interface(self):
-        # elevates ipfsapi.client.Client() namespace for use locally within this module
-        self.__ipfs_client = ipfsapi.client.Client()
-        return self.__ipfs_client
+        # TODO: generate these variables from the config file
+        # node networking variables
+        self._0_node_ip = "192.168.1.x"
+        self._0_node_port = 11111
+
+    
 
     # Launch HTTP server
     def __http_server(self):
@@ -89,9 +85,14 @@ class NodeServer:
         # 3 second delay to allow the daemon to start up
         time.sleep(3)
         # test ipfs api connection; displays some debug info
-        self.__ipfsnode = ipfs.IPFS_API()
-        return self.__ipfsnode
+        #self.__ipfsnode = ipfs.IPFS_API()
 
+    # Instantiates an PY-IPFS-API client object
+    def __client_interface(self):
+        # elevates ipfsapi.client.Client() namespace for use locally within this module
+        self.__ipfs_client = ipfs.IPFS_API()._ipfs_client() 
+        return self.__ipfs_client
+    
     # Create different types of TPLS Server instances
     def __tpls_server(self, _type):
         # functional transport layer security server
@@ -105,7 +106,7 @@ class NodeServer:
         # tpls class instance; not as developed as the functional 
         elif _type == 2:
             # OOP implementation of the TPLS Server
-            tpls_server.TPLS_Server(_0_node_ip, _0_node_port)
+            tpls_server.TPLS_Server(self._0_node_ip, self._0_node_port)
         # end all catch all; reduces errors
         else:
             # TODO: add further error handling, and tplss options
@@ -114,4 +115,4 @@ class NodeServer:
 
     def __client_interface_dir(self):
         # returns list of all the IPFSAPI class methods
-        return dir(self._client_interface())
+        return dir(self.__client_interface())

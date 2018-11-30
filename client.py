@@ -44,6 +44,7 @@ __help =  """
         2: networking menu 
         3: python shell
         tpls: transport level security server
+        ipfs: ipfs menu
         help: help menu (you are here)
 
         have you even read the source code? 
@@ -129,9 +130,6 @@ def rfs(pathname):
     input('enter>')
     return returndata
  
-# Display Setup Main Menu
-def __setup_menu():
-    menu.initialize_menu(setup_md, "SETUP MAIN MENU")
 
 # Execute user build sequence
 def __user_build():
@@ -156,10 +154,6 @@ def __tpls_server():
         print("bruh thats not an option")
         input('enter>')
 
-# Networking Main Menu
-def __ntwrk_menu():
-    refresh_screen()
-    menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
 
 # node launch 
 def node_launch():
@@ -218,6 +212,17 @@ def __start(io_f):
 # Local Network Scan 192.168.1.x:xxxxx
 def __pyscanner3():
     return ps3.main()
+
+# MAIN MENU FUNCTIONS # 
+# Display Setup Main Menu
+def __setup_menu():
+    menu.initialize_menu(setup_md, "SETUP MAIN MENU")
+
+# Networking Main Menu
+def __ntwrk_menu():
+    refresh_screen()
+    menu.initialize_menu(networking_menu_dict, "NETWORKING MAIN MENU")
+
 
 # instantiaite the NetworkClient class
 nc = NetworkClient()
@@ -286,6 +291,10 @@ def login():
                     # tpls : Launches a tpls server
                     if command == 'tpls':
                         __tpls_server()
+
+                    # ipfs : launch ipfs main menu
+                    elif command == "ipfs":
+                        menu.initialize_menu(ipfs_md, "IPFS MAIN MENU")
 
                     # vim : Vim Vindow
                     elif command == "vim":
