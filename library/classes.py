@@ -23,12 +23,6 @@ class User:
     def reputation_calc(self):
         category_rep = self.reputation
 
-class Admin:
-    # TODO: make the admin class an inherited class under the user
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
 class Idea:
     def __init__(self, title, category, value, creator):
         self.title = title
@@ -36,6 +30,12 @@ class Idea:
         self.value = value
         self.creator = creator  
 
+class Admin:
+    # TODO: make the admin class an inherited class under the user
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        
 class DateTime():
     def dt(self):
         return datetime.datetime.now()
