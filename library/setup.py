@@ -12,14 +12,17 @@
 # ------ IMPORTS ------ #
 # python module imports
 import platform
+import os
 
 # local lib imports
 try:
     from library._log import log
     from library.writer import FileObject, Write2file
+    from library.classes import Location
 except ModuleNotFoundError:
     from _log import log
     from writer import FileObject, Write2file
+    from classes import Location
 
 # third party package imports
 from requests import get
