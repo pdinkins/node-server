@@ -15,14 +15,9 @@ import platform
 import os
 
 # local lib imports
-try:
-    from library._log import log
-    from library.writer import FileObject, Write2file
-    from library.classes import Location
-except ModuleNotFoundError:
-    from _log import log
-    from writer import FileObject, Write2file
-    from classes import Location
+from library._log import log
+from library.writer import FileObject, Write2file
+from library.classes import Location
 
 # third party package imports
 from requests import get
@@ -42,18 +37,18 @@ class UserBuild:
         # TODO: check for corrupted or out of date software
     '''
     def __init__(self):
-        self.operating_sys = self.os_sys()
-        self.location = Location()
-        self.node_ip = self.get_ip()
+        self.opsys = platform.system()
+        self.__location = Location()
+        self.ip = self.__location.ip
+        self.pyver = platform.python_version
 
-    def os_sys(self):
-        return platform.system()
-    
-    def get_ip(self):
-        log('obtaining ip info')
-        self.__0_node_ip = self.location.ip
-        log(self.__0_node_ip)
-        return self.__0_node_ip
+def setup_ipfs():
+    if Node.opsys == 'Windows':
+        os.system("choco install go")
+        os.system("choco install ipfs")
+
+    os.system("brew install go")
+
 
 
 if __name__ == "__main__":

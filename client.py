@@ -17,11 +17,12 @@ good luck
 from library import menu 
 from library import ipfs
 from library import tpls_server
-from library import setup
+
 from library.ntwrk import pyscanner3 as ps3
 from library.network import NetworkClient
 from library.classes import Admin, DateTime
 from node import *
+from setup import UserBuild
 
 # python builtin imports
 import datetime
@@ -157,8 +158,7 @@ def __tpls_server():
 
 # node launch 
 def node_launch():
-    node = NodeServer()
-    node._ipfs_node()
+    __node = NodeServer()
 
 # user input wrapper function to read and write files to ipfs manually
 def __ipfs_io():
