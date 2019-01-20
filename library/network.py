@@ -39,3 +39,13 @@ class NetworkClient:
         print('__NetworkClient.__axis_cam()')
         from library.ntwrk import axis
 
+class node:
+    def __init__(self, ip, peers):
+        self.ip = ip
+        self.peers = peers
+    
+    def connect_to_peer(self):
+        pass
+
+    def connect(self):
+        pass

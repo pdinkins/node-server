@@ -43,12 +43,16 @@ class UserBuild:
         self.pyver = platform.python_version
 
 def setup_ipfs():
+    # requires installed package managers
+    # windows install (choco)
     if Node.opsys == 'Windows':
         os.system("choco install go")
         os.system("choco install ipfs")
 
-    os.system("brew install go")
-
+    # mac install (home brew)
+    elif Node.opsys == "Darwin":
+        os.system("brew install go")
+        os.system("brew install ipfs")
 
 
 if __name__ == "__main__":
